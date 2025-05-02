@@ -1,0 +1,114 @@
+.scene-selection-container {
+  width: 100%;
+  height: 100%; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.grey-square {
+  width: 20px;
+  height: 20px;
+  background-color: #C1C1C1; 
+}
+
+.instruction {
+  text-align: center;
+  margin: 30px 0;
+  flex-shrink: 0;
+}
+
+.chinese {
+  font-size: 1.5rem;
+  text-justify: inter-ideograph;
+}
+
+.english {
+  font-size: 1.5rem;
+  hyphens: auto; 
+}
+
+.scenes-grid-container {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; 
+  padding-top: 5vh; 
+  box-sizing: border-box;
+}
+
+.scenes-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 20px;
+  width: 90%;
+  max-width: 95%;
+}
+
+.scene-item {
+  position: relative;
+  cursor: pointer;
+  border-radius: 30px;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  width: 100%;
+}
+
+.scene-item:hover {
+  transform: scale(1.02);
+}
+
+.scene-thumbnail {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: calc(320 / 569 * 100%);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.scene-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: all 0.3s ease;
+}
+
+.scene-item:hover .scene-image {
+  opacity: 0;
+}
+
+.scene-name-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #000000;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.scene-name-chinese {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.scene-name-english {
+  font-size: 1.5rem; 
+  font-weight: bold;
+}
+
+.scene-item:hover .scene-name-overlay {
+  opacity: 1;
+}

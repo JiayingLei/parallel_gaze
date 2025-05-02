@@ -1,0 +1,23 @@
+.main-layout {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  background-color: #050505;
+}
+
+.top-bar {
+  background-color: #FFFFFF;
+  color: #151515;
+  text-align: center;
+  padding: 15px 0;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
