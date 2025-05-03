@@ -67,7 +67,7 @@
   cursor: pointer;
   box-shadow: 0 4px 6px rgba(0,0,0,0.2);
   margin-top: 10rem;
-  transition: background 0.3s;
+  transition: all 0.2s ease;
 }
 
 .start-button:hover {
