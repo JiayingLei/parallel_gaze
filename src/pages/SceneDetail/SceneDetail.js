@@ -11,8 +11,25 @@ function SceneDetail() {
   const [hoveredCharacter, setHoveredCharacter] = useState(null);
   const [maskImages, setMaskImages] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [exploredCharacters, setExploredCharacters] = useState([]);
+  const [showCompletionModal, setShowCompletionModal] = useState(false);
 
   const currentScene = SCENES.find(scene => scene.id === sceneId) || SCENES[0];
+
+  const allCharactersExplored = currentScene.characters.every(char => 
+    exploredCharacters.includes(char.id)
+  );
+
+  useEffect(() => {
+    const savedProgress = JSON.parse(localStorage.getItem(`scene_${sceneId}_progress`)) || [];
+    setExploredCharacters(savedProgress);
+  }, [sceneId]);
+
+  useEffect(() => {
+    if (exploredCharacters.length > 0 && allCharactersExplored) {
+      setShowCompletionModal(true);
+    }
+  }, [exploredCharacters, allCharactersExplored]);
 
   useEffect(() => {
     const loadMasks = async () => {
@@ -87,6 +104,11 @@ function SceneDetail() {
       const pixel = ctx.getImageData(x, y, 1, 1).data;
       
       if (pixel[3] > 0) {
+        if (!exploredCharacters.includes(mask.id)) {
+          const newExplored = [...exploredCharacters, mask.id];
+          setExploredCharacters(newExplored);
+          localStorage.setItem(`scene_${sceneId}_progress`, JSON.stringify(newExplored));
+        }
         navigate(`/scene/${sceneId}/character/${mask.id}`);
         return;
       }
@@ -118,6 +140,20 @@ function SceneDetail() {
     setHoveredCharacter(foundHover);
   };
 
+  const handleBack = () => {
+    localStorage.removeItem(`scene_${sceneId}_progress`);
+    navigate('/scene-selection');
+  };
+
+  const handleFinish = () => {
+    localStorage.removeItem(`scene_${sceneId}_progress`);
+    navigate(`/scene/${sceneId}/report`, {
+      state: { 
+        exploredCharacters 
+      }
+    });
+  };
+
   return (
     <MainLayout>
       <div className="scene-detail-container">
@@ -137,6 +173,41 @@ function SceneDetail() {
               onMouseMove={handleCanvasMouseMove}
               onMouseLeave={() => setHoveredCharacter(null)}
             />
+          </div>
+        )}
+
+        <button className="back-button" onClick={handleBack}>&lt;</button>
+
+        {exploredCharacters.length > 0 && !showCompletionModal && (
+          <button className="finish-button" onClick={handleFinish}>
+            End exploration
+          </button>
+        )}
+
+        {showCompletionModal && (
+          <div className="completion-modal">
+            <div className="modal-content">
+              <button 
+                className="close-modal"
+                onClick={() => setShowCompletionModal(false)}
+              >
+                ×
+              </button>
+              <h2>恭喜你<br />Congratulations</h2>
+              <p>
+                您已完成本场景中<br />
+                平行注视的全部探索<br />
+                You have completed all the<br />
+                explorations of parallel gazing<br />
+                in this scene
+              </p>
+              <button 
+                className="modal-finish-button"
+                onClick={handleFinish}
+              >
+                End exploration
+              </button>
+            </div>
           </div>
         )}
       </div>

@@ -1,0 +1,35 @@
+.report-container {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  text-align: center;
+  background: #f8f8f8;
+  border-radius: 10px;
+}
+
+.character-list {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0;
+}
+
+.character-list li {
+  padding: 0.5rem;
+  margin: 0.3rem 0;
+  background: #C5FF74;
+  border-radius: 5px;
+}
+
+/* .back-button {
+  padding: 0.8rem 1.5rem;
+  background: #333;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+} */
+
+.back-button:hover {
+  opacity: 0.9;
+}

@@ -93,7 +93,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: #000000;
+  color: #151515;
   opacity: 0;
   transition: opacity 0.3s ease;
 }
