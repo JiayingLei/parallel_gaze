@@ -156,7 +156,6 @@
   line-height: 1.2;
 }
 
-/* 修正后的滚动条样式 */
 .dialogue-box::-webkit-scrollbar,
 .question-options::-webkit-scrollbar {
   width: 10px;

@@ -1,35 +1,116 @@
-.report-container {
-  max-width: 600px;
-  margin: 2rem auto;
-  padding: 2rem;
+.exploration-report-container {
+  position: relative;
+  width: 100%;
+  height: 100%; 
+  overflow: hidden;
+}
+
+.exploration-report-container .black-bar {
+  position: absolute;
+  right: 15%;
+  top: 0;
+  height: 100%;
+  background-color: #000000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 10px; 
+  gap: 10px; 
+  overflow: hidden;
+}
+
+.report-content {
+  position: absolute; 
+  top: 50%; 
+  left: 50%; 
+  transform: translate(-50%, -50%); 
+  width: 90%;
+  max-width: 95%; 
+  height: 90%;
+  max-height: 95%; 
+  border-radius: 30px;
+  padding: 40px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  z-index: 10;
+  box-shadow: 0 4px 30px rgba(0,0,0,0.1);
+}
+
+.report-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.report-title {
+  font-size: 1.8rem;
+  color: #FFFFFF;
   text-align: center;
-  background: #f8f8f8;
-  border-radius: 10px;
+  flex: 1;
 }
 
-.character-list {
-  list-style: none;
-  padding: 0;
-  margin: 1.5rem 0;
+.report-logo {
+  max-width: 8%;
+  height: auto;
 }
 
-.character-list li {
-  padding: 0.5rem;
-  margin: 0.3rem 0;
-  background: #C5FF74;
-  border-radius: 5px;
-}
-
-/* .back-button {
-  padding: 0.8rem 1.5rem;
-  background: #333;
-  color: white;
+.report-divider {
   border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1rem;
-} */
+  border-top: 2px solid #C0F17A;
+  margin: 20px 0;
+}
 
-.back-button:hover {
-  opacity: 0.9;
+.report-body {
+  flex: 1;
+  overflow-y: auto;      
+  color: #FFFFFF;
+  font-size: 1.2rem;
+  line-height: 1.8;
+  padding: 0 30px;     
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; 
+  text-align: left;        
+}
+
+.chinese-text, .english-text {
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.progress-bar {
+  font-family: monospace;
+  font-size: 1.4rem;
+  color: #C5FF74;
+  margin: 10px 0;
+}
+
+.bottom-back-button {
+  align-self: center;
+  background-color: #FFFFFF;
+  color: #000000;
+  border: none;
+  border-radius: 30px;
+  padding: 0.8rem 2.5rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+  margin-top: 5rem;
+  transition: all 0.2s ease;
+}
+
+.bottom-back-button:hover {
+  background-color: #C5FF74;
+}
+
+.report-body::-webkit-scrollbar {
+  width: 10px; 
+}
+
+.report-body::-webkit-scrollbar-thumb {
+  background-color: #C1C1C1; 
+  border-radius: 4px; 
 }
