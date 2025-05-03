@@ -25,6 +25,10 @@ function ExplorationReport() {
   const currentScene = SCENES.find(scene => scene.id === sceneId) || SCENES[0];
   const exploredCharacters = state?.exploredCharacters || [];
   
+  const [displayedContent, setDisplayedContent] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isTyping, setIsTyping] = useState(false);
+  
   const totalCharacters = currentScene.characters.length;
   const exploredCount = exploredCharacters.length;
   const unexploredCount = totalCharacters - exploredCount;
@@ -69,6 +73,38 @@ function ExplorationReport() {
     [currentScene.characters, exploredCharacters]
   );
 
+  // 报告内容分段
+  const reportContent = useMemo(() => [
+    { text: "你看到了他们的边缘故事，但你愿意让谁成为中心？", isChinese: true },
+    { isProgressBar: true },
+    { 
+      text: `【 探索度 】你已探索了 ${exploredCount} 个角色，占场景总角色数的 ${exploredPercent}%。\n` +
+            `你与之互动的角色包括：${exploredCount > 0 ? exploredNames.join('， ') : '暂无'}。\n` +
+            `这些角色的故事已开始向你展开，你是否准备好深入了解他们的内心世界？`,
+      isChinese: true 
+    },
+    { 
+      text: `【 沉默区 】仍有 ${unexploredCount} 个角色未被探索，占场景总角色数的 ${unexploredPercent}%。\n` +
+            `这些未探索的角色包括：${unexploredCount > 0 ? unexploredNames.join('， ') : '无'}。\n` +
+            `他们仍在沉默中等待，你会选择揭开他们的故事吗？`,
+      isChinese: true 
+    },
+    { text: "You've seen their peripheral stories, but who are you willing to put at the center?", isChinese: false },
+    { isProgressBar: true },
+    { 
+      text: `[ Exploration Progress ] You have explored ${exploredCount} characters, accounting for ${exploredPercent}% of the total characters in this scene.\n` +
+            `The characters you've interacted with include: ${exploredCount > 0 ? exploredEnglishNames.join(', ') : 'None'}.\n` +
+            `Their stories have begun to unfold before you. Are you ready to dive deeper into their inner worlds?`,
+      isChinese: false 
+    },
+    { 
+      text: `[ Silent Zone ] There are still ${unexploredCount} characters unexplored, representing ${unexploredPercent}% of the total characters.\n` +
+            `These unexplored characters include: ${unexploredCount > 0 ? unexploredEnglishNames.join(', ') : 'None'}.\n` +
+            `They remain in silence, waiting. Will you choose to uncover their stories?`,
+      isChinese: false 
+    }
+  ], [exploredCount, unexploredCount, exploredPercent, unexploredPercent, exploredNames, unexploredNames, exploredEnglishNames, unexploredEnglishNames]);
+
   useEffect(() => {
     const calculateSquares = () => {
       const barHeight = window.innerHeight;
@@ -81,6 +117,59 @@ function ExplorationReport() {
     window.addEventListener('resize', calculateSquares);
     return () => window.removeEventListener('resize', calculateSquares);
   }, []);
+
+  useEffect(() => {
+    if (currentIndex >= reportContent.length) return;
+
+    const currentItem = reportContent[currentIndex];
+    
+    if (currentItem.isProgressBar) {
+      setDisplayedContent(prev => [...prev, currentItem]);
+      setCurrentIndex(prev => prev + 1);
+      return;
+    }
+
+    setIsTyping(true);
+    let currentText = '';
+    const textToType = currentItem.text;
+
+    const interval = setInterval(() => {
+      if (currentText.length < textToType.length) {
+        currentText += textToType[currentText.length];
+        setDisplayedContent(prev => [
+          ...prev.slice(0, -1),
+          { ...currentItem, text: currentText }
+        ]);
+      } else {
+        clearInterval(interval);
+        setIsTyping(false);
+        setCurrentIndex(prev => prev + 1);
+      }
+    }, 20);
+
+    setDisplayedContent(prev => [...prev, { ...currentItem, text: '' }]);
+
+    return () => clearInterval(interval);
+  }, [currentIndex, reportContent]);
+
+  const renderContent = () => {
+    return displayedContent.map((item, index) => {
+      if (item.isProgressBar) {
+        return <ProgressBar key={index} total={totalCharacters} filled={exploredCount} />;
+      }
+
+      return item.text.split('\n').map((line, lineIndex) => (
+        line && (
+          <p 
+            key={`${index}-${lineIndex}`} 
+            className={item.isChinese ? 'chinese-text' : 'english-text'}
+          >
+            {line}
+          </p>
+        )
+      ));
+    });
+  };
 
   return (
     <MainLayout>
@@ -109,37 +198,10 @@ function ExplorationReport() {
           <hr className="report-divider" />
 
           <div className="report-body">
-            <p className="chinese-text">
-              你看到了他们的边缘故事，但你愿意让谁成为中心？
-            </p>
-            <ProgressBar total={totalCharacters} filled={exploredCount} />
-            <p>
-              【 探索度 】你已探索了 {exploredCount} 个角色，占场景总角色数的 {exploredPercent}%。<br />
-              你与之互动的角色包括：{exploredCount > 0 ? exploredNames.join('， ') : '暂无'}。<br />
-              这些角色的故事已开始向你展开，你是否准备好深入了解他们的内心世界？
-            </p>
-            <p>
-              【 沉默区 】仍有 {unexploredCount} 个角色未被探索，占场景总角色数的 {unexploredPercent}%。<br />
-              这些未探索的角色包括：{unexploredCount > 0 ? unexploredNames.join('， ') : '无'}。<br />
-              他们仍在沉默中等待，你会选择揭开他们的故事吗？
-            </p>
-
-            <p className="english-text">
-              You've seen their peripheral stories, but who are you willing to put at the center?
-            </p>
-            <ProgressBar total={totalCharacters} filled={exploredCount} />
-            <p>
-              [ Exploration Progress ] You have explored {exploredCount} characters, accounting for {exploredPercent}% of the total characters in this scene.<br />
-              The characters you've interacted with include: {exploredCount > 0 ? exploredEnglishNames.join(', ') : 'None'}.<br />
-              Their stories have begun to unfold before you. Are you ready to dive deeper into their inner worlds?
-            </p>
-            <p>
-              [ Silent Zone ] There are still {unexploredCount} characters unexplored, representing {unexploredPercent}% of the total characters.<br />
-              These unexplored characters include: {unexploredCount > 0 ? unexploredEnglishNames.join(', ') : 'None'}.<br />
-              They remain in silence, waiting. Will you choose to uncover their stories?
-            </p>
-            
-            <button className="bottom-back-button" onClick={() => navigate('/scene-selection')}>Back</button>
+            {renderContent()}
+            {!isTyping && currentIndex >= reportContent.length && (
+              <button className="bottom-back-button" onClick={() => navigate('/scene-selection')}>Back</button>
+            )}
           </div>
         </div>
       </div>

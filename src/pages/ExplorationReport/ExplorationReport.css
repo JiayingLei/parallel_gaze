@@ -77,6 +77,7 @@
 
 .chinese-text, .english-text {
   font-weight: 500;
+  line-height: 1.5;
   margin-bottom: 10px;
 }
 
@@ -84,7 +85,8 @@
   font-family: monospace;
   font-size: 1.4rem;
   color: #C5FF74;
-  margin: 10px 0;
+  margin-top: 20px;
+  margin-bottom: 10px;
 }
 
 .bottom-back-button {
