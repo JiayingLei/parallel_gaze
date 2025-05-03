@@ -23,17 +23,21 @@ function Introduction() {
   const handleNext = () => {
     setCurrentPageIndex(prev => {
       if (prev < totalPages - 1) return prev + 1;
-      navigate('/scene-selection');
       return prev;
     });
+    if (currentPageIndex >= totalPages - 1) {
+      navigate('/scene-selection');
+    }
   };
-
+  
   const handlePrevious = () => {
     setCurrentPageIndex(prev => {
       if (prev > 0) return prev - 1;
-      navigate('/');
       return prev;
     });
+    if (currentPageIndex <= 0) {
+      navigate('/');
+    }
   };
 
   useScroll(handleNext, handlePrevious);

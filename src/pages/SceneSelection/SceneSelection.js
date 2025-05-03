@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import MainLayout from '../../components/layouts/MainLayout';
 import useScroll from '../../hooks/useScroll';
+import { SCENES } from '../../constants/scenes';
 import './SceneSelection.css';
 
 function SceneSelection() {
@@ -11,51 +12,6 @@ function SceneSelection() {
   const handleSceneClick = (sceneId) => {
     navigate(`/scene/${sceneId}`);
   };
-
-  const scenes = [
-    { 
-      id: '1',
-      chineseName: '会议',
-      englishName: 'Meeting',
-      bgColor: '#CCF656',
-      thumbnail: `${process.env.PUBLIC_URL}/assets/images/01-meeting.png`
-    },
-    { 
-      id: '2',
-      chineseName: '派对', 
-      englishName: 'Party',
-      bgColor: '#F230AA', 
-      thumbnail: `${process.env.PUBLIC_URL}/assets/images/02-party.png`
-    },
-    { 
-      id: '3',
-      chineseName: '活动',
-      englishName: 'Activity',
-      bgColor: '#48937E', 
-      thumbnail: `${process.env.PUBLIC_URL}/assets/images/03-activity.png`
-    },
-    { 
-      id: '4',
-      chineseName: '仪式',
-      englishName: 'Ceremony',
-      bgColor: '#FE7733', 
-      thumbnail: `${process.env.PUBLIC_URL}/assets/images/04-ceremony.png`
-    },
-    { 
-      id: '5',
-      chineseName: '现场',
-      englishName: 'Scene',
-      bgColor: '#6ECE8F', 
-      thumbnail: `${process.env.PUBLIC_URL}/assets/images/05-scene.png`
-    },
-    { 
-      id: '6',
-      chineseName: '舞台',
-      englishName: 'Stage',
-      bgColor: '#B2A1FF', 
-      thumbnail: `${process.env.PUBLIC_URL}/assets/images/06-stage.png`
-    },
-  ];
 
   useEffect(() => {
     const updateSquareCount = () => {
@@ -90,7 +46,7 @@ function SceneSelection() {
         
         <div className="scenes-grid-container">
           <div className="scenes-grid">
-            {scenes.map((scene) => (
+            {SCENES.map(scene => (
               <div
                 key={scene.id}
                 className="scene-item"
