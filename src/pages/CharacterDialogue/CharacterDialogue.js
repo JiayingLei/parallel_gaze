@@ -132,8 +132,8 @@ function CharacterDialogue() {
       text: `${answer.zh || '回答'}\n${answer.en || 'Answer'}`, 
       isCharacter: true 
     }]);
-    
-    setSelectedQAs(prev => [...prev, { question, answer }]);
+  
+    setSelectedQAs(prev => [...prev, idx]);
   };
 
   const handleBackToScene = () => {
@@ -192,7 +192,7 @@ function CharacterDialogue() {
             {showQuestions && !isTyping && selectedQAs.length < questions.length && (
               <div className="question-options">
                 {questions.map((q, idx) =>
-                  !selectedQAs.find((_, i) => i === idx) ? (
+                  !selectedQAs.includes(idx) ? (  
                     <button
                       key={idx}
                       onClick={() => handleQuestionClick(idx)}
