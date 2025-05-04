@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';  
+import React, { useState, useEffect, useRef } from 'react';  
 import { useParams, useNavigate } from 'react-router-dom';
 import MainLayout from '../../components/layouts/MainLayout';
 import { SCENES } from '../../constants/scenes';
@@ -26,6 +26,20 @@ function CharacterDialogue() {
   const [selectedQAs, setSelectedQAs] = useState([]);
   const [typingQueue, setTypingQueue] = useState([]);
   const [isTyping, setIsTyping] = useState(false);
+  const [currentVideo, setCurrentVideo] = useState(null);
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    if (!character.introduction.video) return;
+
+    setCurrentVideo(character.introduction.video);
+    
+    const video = videoRef.current;
+    if (!video) return;
+
+    video.play().catch(e => console.error("Video play failed:", e));
+
+  }, [character]);
 
   useEffect(() => {
     if (typingQueue.length === 0 || !typingQueue[0].isCharacter) return;
@@ -106,6 +120,14 @@ function CharacterDialogue() {
       }
     ]);
     
+    if (answer.video) {
+      setCurrentVideo(answer.video);
+      const video = videoRef.current;
+      if (video) {
+        video.play().catch(e => console.error("Answer video play failed:", e));
+      }
+    }
+    
     setTypingQueue([{ 
       text: `${answer.zh || '回答'}\n${answer.en || 'Answer'}`, 
       isCharacter: true 
@@ -144,7 +166,17 @@ function CharacterDialogue() {
 
         <div className="content-wrapper">
           <div className="media-panel">
-            <div className="media-placeholder">媒体区</div>
+            {currentVideo && (
+              <video 
+                ref={videoRef}
+                src={currentVideo}
+                autoPlay
+                muted={false}
+                className="character-video"
+                playsInline
+                controls={false}
+              />
+            )}
           </div>
 
           <div className="dialogue-panel">
