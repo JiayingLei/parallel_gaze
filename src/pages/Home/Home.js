@@ -30,7 +30,7 @@ function Home() {
   return (
     <MainLayout
       style={{
-        backgroundImage: `url('${process.env.PUBLIC_URL}/assets/images/background-character.png')`,
+        backgroundImage: `url('${process.env.PUBLIC_URL}/assets/images/home-image.png')`,
         backgroundSize: '100% 100%',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',

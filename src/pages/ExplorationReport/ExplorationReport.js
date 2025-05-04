@@ -192,7 +192,7 @@ function ExplorationReport() {
         >
           <div className="report-header">
             <h1 className="report-title">Exploration Report</h1>
-            <img src="/assets/icons/backquote-logo.svg" alt="logo" className="report-logo" />
+            <img src="/assets/icons/backquote-icon.svg" alt="logo" className="report-logo" />
           </div>
 
           <hr className="report-divider" />
