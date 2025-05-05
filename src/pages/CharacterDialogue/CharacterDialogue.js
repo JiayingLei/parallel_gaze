@@ -37,7 +37,15 @@ function CharacterDialogue() {
     const video = videoRef.current;
     if (!video) return;
 
-    video.play().catch(e => console.error("Video play failed:", e));
+    video.play().catch(e => {
+      console.error("Video play failed:", e);
+      // 如果自动播放失败，添加用户交互监听
+      const handleUserInteraction = () => {
+        video.play();
+        document.removeEventListener('click', handleUserInteraction);
+      };
+      document.addEventListener('click', handleUserInteraction);
+    });
 
   }, [character]);
 
