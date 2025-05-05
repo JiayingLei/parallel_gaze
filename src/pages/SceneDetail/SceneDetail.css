@@ -43,7 +43,7 @@
 
 .character-mask-canvas.character-hovered {
   cursor: pointer;
-  filter: drop-shadow(0 0 5px #FFFFFF);
+  filter: drop-shadow(0 0 5px #C5FF74);
 }
 
 .back-button {
