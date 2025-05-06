@@ -8,6 +8,7 @@ function SceneDetail() {
   const { sceneId } = useParams();
   const navigate = useNavigate();
   const canvasRef = useRef(null);
+  const audioRef = useRef(null); 
   const [hoveredCharacter, setHoveredCharacter] = useState(null);
   const [maskImages, setMaskImages] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -19,6 +20,28 @@ function SceneDetail() {
   const allCharactersExplored = currentScene.characters.every(char => 
     exploredCharacters.includes(char.id)
   );
+
+  useEffect(() => {
+    if (!currentScene?.backgroundMusic) return;
+  
+    const audio = new Audio(currentScene.backgroundMusic);
+    audio.loop = true;
+    audioRef.current = audio;
+  
+    audio.addEventListener('canplaythrough', () => {
+      audio.play().catch((e) => {
+        console.error("Autoplay blocked. Waiting for user interaction...", e);
+        const handleClick = () => audio.play().catch(console.error);
+        document.addEventListener('click', handleClick, { once: true });
+      });
+    });
+  
+    return () => {
+      audio.pause();
+      audio.removeEventListener('canplaythrough', () => {});
+      audioRef.current = null;
+    };
+  }, [currentScene.backgroundMusic]);
 
   useEffect(() => {
     const savedProgress = JSON.parse(localStorage.getItem(`scene_${sceneId}_progress`)) || [];

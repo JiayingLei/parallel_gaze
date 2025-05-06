@@ -6,6 +6,7 @@ export const SCENE_SCENE = {
   bgColor: '#6ECE8F',
   thumbnail: `${process.env.PUBLIC_URL}/assets/images/scenes/05-scene-thumb.png`,
   full: `${process.env.PUBLIC_URL}/assets/images/scenes/05-scene-full.png`,
+  backgroundMusic: `${process.env.PUBLIC_URL}/assets/audio/05-scene-bg-music.mp3`,
   characters: [
     {
       id: '1',
