@@ -28,17 +28,29 @@ function SceneDetail() {
     audio.loop = true;
     audioRef.current = audio;
   
-    audio.addEventListener('canplaythrough', () => {
+    const canPlayHandler = () => {
       audio.play().catch((e) => {
         console.error("Autoplay blocked. Waiting for user interaction...", e);
-        const handleClick = () => audio.play().catch(console.error);
+        const handleClick = () => {
+          audio.play().catch(console.error);
+          document.removeEventListener('click', handleClick);
+        };
         document.addEventListener('click', handleClick, { once: true });
       });
-    });
+    };
+  
+    audio.addEventListener('canplaythrough', canPlayHandler);
+  
+    const errorHandler = () => console.error("Audio loading failed");
+    audio.addEventListener('error', errorHandler);
   
     return () => {
       audio.pause();
-      audio.removeEventListener('canplaythrough', () => {});
+      audio.currentTime = 0;
+      audio.removeEventListener('canplaythrough', canPlayHandler);
+      audio.removeEventListener('error', errorHandler);
+      audio.src = '';
+      audio.load();
       audioRef.current = null;
     };
   }, [currentScene.backgroundMusic]);
