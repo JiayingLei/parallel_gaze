@@ -85,29 +85,29 @@ export const SCENE_SCENE = {
       chineseRole: '女警官',
       englishRole: 'Policewoman',
       introduction: {
-        zh: '我是蒂娜，刑侦队的新晋队员。今天是我第一次真正参与封锁案发现场，我一直在努力不让手心冒汗。',
-        en: "I'm Tina, a new member of the detective squad. This is my first time truly participating in sealing off a crime scene, and I've been trying not to let my palms sweat.",
+        zh: '我是蒂娜，派出所刑侦队的新晋队员，才干这一行不到一年。今天是我第一次真正参与封锁案发现场，我一直在努力不让手心冒汗。',
+        en: "I'm Tina, a rookie officer in the criminal investigation team of the precinct. I've been in this field for less than a year. Today is my first time truly involved in securing a crime scene, and I'm trying hard not to let my palms sweat.",
         video: `${process.env.PUBLIC_URL}/assets/videos/05-scene-3-intro.mp4`
       },
       questions: [
         {
           zh: '你为什么一直皱着眉头？是在紧张，还是现场有点不对劲？',
-          en: "Why do you keep frowning? Are you nervous, or is there something off at the scene?"
+          en: "Why are you furrowing your brows? Are you nervous, or is something off about the scene?"
         },
         {
           zh: '你和那位男警官是什么关系？工作上看起来你们挺熟的。',
-          en: "What's your relationship with the male officer? You seem familiar at work."
+          en: "What's your relationship with the male officer? You seem pretty familiar with each other on the job."
         }
       ],
       answers: [
         {
-          zh: '说实话，确实有点紧张。这起案件太蹊跷了，现场整洁得几乎不像有斗争过的痕迹，但又明显有人遭遇了暴力。',
-          en: "Honestly, I am a bit nervous. The scene is suspiciously tidy—almost no signs of struggle, yet there's clear evidence of violence.",
+          zh: '说实话，确实有点紧张。这起案件太蹊跷了，现场整洁得几乎不像有斗争过的痕迹，但又明显有人遭遇了暴力。我在想，是不是凶手事先做了精心的清理？',
+          en: "To be honest, I'm a bit nervous. This case is too strange. The scene is so tidy that it almost doesn't look like there was any struggle, but it's clear someone suffered violence. I'm wondering, did the killer clean up meticulously beforehand?",
           video: `${process.env.PUBLIC_URL}/assets/videos/05-scene-3-answer1.mp4`
         },
         {
-          zh: '那是马克，我的带教官。他对我特别严厉，但其实每次都会悄悄帮我补做笔录的细节。',
-          en: "That's Mark, my mentor. He's strict, but he always helps me quietly with the details of reports.",
+          zh: '那是马克，我的带教官。他对我特别严厉，但我知道那是因为他见过太多案子，不想让我出错。他不说，但其实每次都会悄悄帮我补做笔录的细节。',
+          en: "That's Mark, my mentor. He's really tough on me, but I know it's because he's seen so many cases and doesn't want me to make mistakes. He doesn't say much, but he actually helps me with the details of the reports every time without mentioning it.",
           video: `${process.env.PUBLIC_URL}/assets/videos/05-scene-3-answer2.mp4`
         }
       ],
